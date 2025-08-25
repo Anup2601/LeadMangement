@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // <-- use react-router-do
 import React from 'react';
 import { useAuthStore } from "../store/useAuthStore";
 
-const LoginPage = () => {
+const LogInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -147,4 +147,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LogInPage;
