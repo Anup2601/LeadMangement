@@ -10,7 +10,7 @@ const LogInPage = () => {
     email: "",
     password: "",
   });
-  const { login, isLoggingIn } = useAuthStore();
+  const {login, isLoggingIn } = useAuthStore();
   const [errors, setErrors] = useState({});
   const navigate= useNavigate();
   const handleInputChange = (field, value) => {
