@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Users, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom"; // <-- use react-router-dom here
+import { Link, useNavigate } from "react-router-dom"; // <-- use react-router-dom here
 import React from 'react';
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -13,6 +13,7 @@ const SignupUpPage = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { signup, isSigningUp } = useAuthStore();
   const [errors, setErrors] = useState({});
 
@@ -41,9 +42,12 @@ const SignupUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      signup(formData);
-    }
+    try {
+        await signup(formData);
+        navigate("/login");
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
   };
 
   const getPasswordStrength = (password) => {

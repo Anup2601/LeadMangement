@@ -1,39 +1,29 @@
 import { useState } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Users, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom"; // <-- use react-router-dom here
+import { Link, useNavigate } from "react-router-dom"; // <-- use react-router-dom here
 import React from 'react';
 import { useAuthStore } from "../store/useAuthStore";
 
-const SignupUpPage = () => {
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [confirmPassword,setConfirmPassword]= useState("");
   const [formData, setFormData] = useState({
-    fullName: "",
     email: "",
     password: "",
   });
-  const { signup, isSigningUp } = useAuthStore();
+  const { login, isLoggingIn } = useAuthStore();
   const [errors, setErrors] = useState({});
-
+  const navigate= useNavigate();
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-    else if (formData.fullName.trim().length < 2) newErrors.fullName = "Full name must be at least 2 characters";
-
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Please enter a valid email";
 
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 8) newErrors.password = "Password must be at least 8 characters";
-
-    if (!confirmPassword) newErrors.confirmPassword = "Please confirm your password";
-    else if (formData.password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -41,9 +31,12 @@ const SignupUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      signup(formData);
-    }
+    try {
+        await login(formData);
+        navigate("/lead");
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
   };
 
   const getPasswordStrength = (password) => {
@@ -69,24 +62,6 @@ const SignupUpPage = () => {
 
         {/* Form */}
         <div className="p-6 space-y-5">
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                value={formData.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${
-                  errors.fullName ? "border-red-500" : "border-gray-300"
-                }`}
-                placeholder="Enter your full name"
-              />
-            </div>
-            {errors.fullName && <p className="text-red-500 text-sm mt-1 flex items-center gap-1">⚠ {errors.fullName}</p>}
-          </div>
-
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
@@ -141,61 +116,29 @@ const SignupUpPage = () => {
             {errors.password && <p className="text-red-500 text-sm mt-1 flex items-center gap-1">⚠ {errors.password}</p>}
           </div>
 
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                }`}
-                placeholder="Confirm your password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-            </div>
-
-            {/* Password Match Indicator */}
-            {confirmPassword && formData.password === confirmPassword && (
-              <div className="flex items-center gap-2 mt-2 text-green-600">
-                <CheckCircle className="w-4 h-4" />
-                <span className="text-sm">Passwords match</span>
-              </div>
-            )}
-
-            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1 flex items-center gap-1">⚠ {errors.confirmPassword}</p>}
-          </div>
+        
 
           {/* Submit */}
           <button
             onClick={handleSubmit}
-            disabled={isSigningUp}
+            disabled={isLoggingIn}
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-blue-400 disabled:to-indigo-400 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            {isSigningUp ? (
+            {isLoggingIn ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
-                Creating Account...
+                Login...
               </>
             ) : (
-              "Create Account"
+              "Login"
             )}
           </button>
 
           {/* Footer */}
           <div className="text-center mt-6 pt-6 border-t border-gray-100">
             <p className="text-gray-600 text-sm">
-              Already have an account?{" "}
-              <Link to="/login" className="text-blue-600 underline">Sign in</Link>
+              If Already have not Created ?{" "}
+              <Link to="/" className="text-blue-600 underline">signup</Link>
             </p>
           </div>
         </div>
@@ -204,4 +147,4 @@ const SignupUpPage = () => {
   );
 };
 
-export default SignupUpPage;
+export default LoginPage;
