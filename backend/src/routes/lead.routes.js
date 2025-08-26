@@ -1,5 +1,6 @@
 // routes/lead.routes.js
 import express from "express";
+import {Router} from 'express';
 import {
   createLead,
   getLeads,
@@ -8,7 +9,7 @@ import {
   deleteLead,
 } from "../controllers/lead.controllers.js";
 
-const LeadRouter = express.Router();
+const LeadRouter = Router();
 
 // Routes
 LeadRouter.post("/", createLead);         // Create
