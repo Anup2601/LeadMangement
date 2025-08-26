@@ -33,10 +33,12 @@ const LogInPage = () => {
     e.preventDefault();
     try {
         await login(formData);
-        navigate("/lead");
+        navigate("/leads");
       } catch (error) {
+        alert("Invalid Crediantial");
         console.error("Login failed:", error);
       }
+
   };
 
   const getPasswordStrength = (password) => {
@@ -138,7 +140,7 @@ const LogInPage = () => {
           <div className="text-center mt-6 pt-6 border-t border-gray-100">
             <p className="text-gray-600 text-sm">
               If Already have not Created ?{" "}
-              <Link to="/" className="text-blue-600 underline">signup</Link>
+              <Link to="/signup" className="text-blue-600 underline">signup</Link>
             </p>
           </div>
         </div>

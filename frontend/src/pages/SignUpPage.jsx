@@ -44,7 +44,7 @@ const SignupUpPage = () => {
     e.preventDefault();
     try {
         await signup(formData);
-        navigate("/login");
+        navigate("/");
       } catch (error) {
         console.error("Login failed:", error);
       }
@@ -199,7 +199,7 @@ const SignupUpPage = () => {
           <div className="text-center mt-6 pt-6 border-t border-gray-100">
             <p className="text-gray-600 text-sm">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-600 underline">Sign in</Link>
+              <Link to="/" className="text-blue-600 underline">Sign in</Link>
             </p>
           </div>
         </div>
