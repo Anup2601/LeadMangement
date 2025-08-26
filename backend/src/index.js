@@ -1,5 +1,5 @@
 import express from 'express';
-import Routes from './routes/user.routes.js';
+import UserRouter from "./routes/user.routes.js"
 import LeadRouter from './routes/lead.routes.js';
 import { connectDB } from './lib/db.js';
 import cors from "cors";
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
   res.send(`Jai shree Ram, running on port ${PORT}`);
 });
 
-app.use("/api/auth", Routes);
+app.use("/api/auth",UserRouter);
 app.use("/leads", LeadRouter);
 
 if (NODE_ENV === "production") {
