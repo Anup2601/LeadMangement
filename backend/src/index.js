@@ -33,9 +33,10 @@ app.use("/leads", leadRoutes);
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-  });
+  // Match all routes
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+});
 }
 
 app.listen(PORT, () => {
