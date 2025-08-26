@@ -8,13 +8,13 @@ import {
   deleteLead,
 } from "../controllers/lead.controllers.js";
 
-const router = express.Router();
+const LeadRouter = express.Router();
 
 // Routes
-router.post("/", createLead);         // Create
-router.get("/", getLeads);            // Get all
-router.get("/:id", getLeadById);      // Get by ID
-router.put("/:id", updateLead);       // Update
-router.delete("/:id", deleteLead);    // Delete
+LeadRouter.post("/", createLead);         // Create
+LeadRouter.get("/", getLeads);            // Get all
+LeadRouter.get("/:id", getLeadById);      // Get by ID
+LeadRouter.put("/:id", updateLead);       // Update
+LeadRouter.delete("/:id", deleteLead);    // Delete
 
-export default router;
+export default LeadRouter;

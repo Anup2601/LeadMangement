@@ -1,6 +1,6 @@
 import express from 'express';
 import Routes from './routes/user.routes.js';
-import leadRoutes from './routes/lead.routes.js';
+import LeadRouter from './routes/lead.routes.js';
 import { connectDB } from './lib/db.js';
 import cors from "cors";
 import path from "path";
@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const NODE_ENV = process.env.NODE_ENV || "development";  // ✅ use env variable
+const NODE_ENV = process.env.NODE_ENV || "development";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", Routes);
-app.use("/leads", leadRoutes);
+app.use("/leads", LeadRouter);
 
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
