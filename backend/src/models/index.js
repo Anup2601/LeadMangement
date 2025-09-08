@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import  initdata  from "./data.js";
 import Lead from "./lead.models.js";
 
-const MONGO_URL = "mongodb+srv://shaarmprince:prince%40123@cluster0.eooelgf.mongodb.net/leadDB?retryWrites=true&w=majority";
+const MONGO_URL = process.env.MONGO_URI;
 
 main()
   .then(() => {

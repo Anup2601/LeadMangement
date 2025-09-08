@@ -6,8 +6,11 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 const __filename = fileURLToPath(import.meta.url);

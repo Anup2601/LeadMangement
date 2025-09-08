@@ -8,7 +8,7 @@ export default function LeadHeader() {
 
   const handleLogout = () => {
     logout(); // clear token/session
-    navigate("/login");
+    navigate("/");
   };
 
   return (

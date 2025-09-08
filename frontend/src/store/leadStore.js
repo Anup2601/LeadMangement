@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/leads"; // update if needed
+const API_URL = "http://localhost:5000/leads"; // update if needed
 
 export const useLeadStore = create((set, get) => ({
   leads: [],
