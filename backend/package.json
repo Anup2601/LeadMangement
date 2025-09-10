@@ -21,5 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "leadmangement": "file:..",
     "mongoose": "^8.18.0"
+  },
+   "engines": {
+    "node": "20.x"
   }
 }
